@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Services\ProductService;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProductController extends Controller
 {
+    protected ProductService $productService;
+
+    public function __construct(ProductService $productService)
+    {
+        $this->productService = $productService;
+    }
+
     /**
      * Display a listing of products
      *
@@ -15,8 +23,8 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        // $products = Product::all();
-        $products = Product::paginate(20)->withQueryString();
+        $products = $this->productService->getPaginated();
+
         return Inertia::render('Products/Index', [
             'products' => $products
         ]);

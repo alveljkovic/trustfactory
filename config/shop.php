@@ -11,5 +11,6 @@ return [
     |
     */
     'admin_email' => env('SHOP_ADMIN_EMAIL', 'trustfactory@example.com'),
-    'low_stock_threshold' => env('SHOP_LOW_STOCK_THRESHOLD', 5),
+    'low_stock_threshold' => (int) env('SHOP_LOW_STOCK_THRESHOLD', 5),
+    'pagination_size' => (int) env('SHOP_PAGINATION_SIZE', 20),
 ];

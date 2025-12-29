@@ -6,7 +6,6 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use App\Jobs\LowStockJob;
 
 class OrderService
 {
@@ -68,9 +67,7 @@ class OrderService
                 $product->decrement('stock_quantity', $item->quantity);
 
                 // dispatch event for LowStock if needed
-                if ($product->stock_quantity < config('shop.low_stock_threshold')) {
-                    LowStockJob::dispatch($product);
-                }
+                ProductService::lowStockAction($product);
             }
 
             // Insert order items in one query
