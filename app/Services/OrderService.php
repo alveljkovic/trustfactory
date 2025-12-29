@@ -67,7 +67,7 @@ class OrderService
                 // Update stock
                 $product->decrement('stock_quantity', $item->quantity);
 
-                // dispatch event za LowStock if needed
+                // dispatch event for LowStock if needed
                 if ($product->stock_quantity < config('shop.low_stock_threshold')) {
                     LowStockJob::dispatch($product);
                 }
