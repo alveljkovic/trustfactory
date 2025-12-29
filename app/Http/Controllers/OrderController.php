@@ -57,9 +57,9 @@ class OrderController extends Controller
     {
         try {
             $order = $this->orderService->checkout();
-        } catch (\Throwable $th) {
-            //throw $th;
-            dd($th->getMessage());
+        } catch (\Throwable $e) {
+            return redirect()->route('order.show', ['order' => $order])
+                ->with('error', $e->getMessage());
         }
 
         return redirect()->route('order.show', ['order' => $order])
